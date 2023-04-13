@@ -4,6 +4,8 @@ import "../../../styles/product-card.css";
 
 import { Link } from "react-router-dom";
 
+import { db } from "../../../firebase";
+
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
@@ -20,6 +22,14 @@ const ProductCard = (props) => {
         price,
       })
     );
+
+    const cartItem = {
+      id,
+      title,
+      image01,
+      price,
+    };
+    db.collection("carts").add(cartItem);
   };
 
   return (
