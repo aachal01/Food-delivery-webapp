@@ -30,7 +30,7 @@ const ProductCard = (props) => {
       price,
     };
     try {
-      const db = firebase.firestore();
+      // const db = firebase.firestore();
       const cartRef = db.collection("carts").doc();
       const docSnapshot = await cartRef.get();
       if (!docSnapshot.exists) {

@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/firestore";
+import "firebase/auth";
 
 
 const firebaseConfig = {
@@ -13,10 +14,10 @@ const firebaseConfig = {
     measurementId: "G-GL6T9BV73F"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = auth(app);
-const storage = storage(app);
-const db = firestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth(app);
+const storage = firebase.storage(app);
+const db = firebase.firestore(app);
 const fs = firebase
   
 export { auth, storage, db, fs};
