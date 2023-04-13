@@ -13,7 +13,7 @@ const ProductCard = (props) => {
   const { id, title, image01, price } = props.item;
   const dispatch = useDispatch();
 
-  const addToCart = () => {
+  const addToCart = async () => {
     dispatch(
       cartActions.addItem({
         id,
@@ -29,7 +29,24 @@ const ProductCard = (props) => {
       image01,
       price,
     };
-    db.collection("carts").add(cartItem);
+    try {
+      const db = firebase.firestore();
+      const cartRef = db.collection("carts").doc();
+      const docSnapshot = await cartRef.get();
+      if (!docSnapshot.exists) {
+        await cartRef.set({
+          items: [cartItem],
+        });
+      } else {
+        const existingCart = docSnapshot.data();
+        await cartRef.update({
+          items: [...existingCart.items, cartItem],
+        });
+      }
+      dispatch(cartActions.addItem(cartItem));
+    } catch (error) {
+      console.error("Error adding item to cart", error);
+    }
   };
 
   return (
